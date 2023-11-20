@@ -1,0 +1,49 @@
+body{
+    background: #dddddd;
+}
+
+div .signup {
+    
+    width: 300px;
+    border: 15px solid;
+    background: white;
+    border-color: transparent;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px gray ;
+    padding:50px;
+    margin:20px;
+
+    text-align: center;
+    margin:auto;
+    padding:10px;
+    position: relative;
+    top: 50%;
+    transform: translateY(30%);
+    
+}
+
+button.signup-button{
+    margin-top: 10px;
+    border-radius: 50px;
+    width:200px;
+    height: 50px;
+    border-color: transparent;
+    background: lightgray;
+
+}
+
+input.signup-input{
+   border: 0px;
+   box-shadow: 0px 1px 1px gray;
+   outline: 0px;
+}
+
+img.signup-image{
+    border-radius: 25px;
+    width: 64px;
+    height: 64px;
+}
+
+button.signup-button:hover {
+    background: grey;
+}
