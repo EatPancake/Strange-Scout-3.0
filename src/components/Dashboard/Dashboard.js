@@ -4,17 +4,11 @@ import { Link } from 'react-router-dom';
 export default function Dashboard() {
     return(
         <div>
-            <h2>Dashboard</h2>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/login">Dashboard</Link>
-                    </li>
-                    <li>
-                        <Link to="/dashboard">Login</Link>
-                    </li>
-                </ul>
-            </nav>
+            <div className='topnav'>
+                <a className='active' href='/auth/dashboard'>Dashboard</a>
+                <a href='/auth/scouting'>Scout</a>
+                <a className='nav-logout' href='/dashboard'>Logout</a>
+            </div>
         </div>
 
         

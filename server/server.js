@@ -9,7 +9,7 @@ const cookieParser = require("cookie-parser");
 
 const saltRound = 10;
 
-const staticToken = 'test1234';
+const auth = require("./auth");
 
 const connection = mysql.createConnection({
     host:'localhost',
@@ -40,43 +40,6 @@ app.use (
     })
 )
 
-const verifyJWT = (req, res, next) => {
-
-    const token = req.headers["x-access-token"];
-    console.log(token);
-
-    if(!token) {
-        res.send("need a token");
-    } else {
-        jwt.verify(token, "jtwSecret", (err, decoded) => {
-            if(err)
-            {
-                console.log(err);
-                res.json({auth:false,message:"failed to auth"});
-            } else {
-                req.userId = decoded.id;
-                next();
-            } 
-        })
-    }
-}
-
-const testToken = (req, res) => {
-    const token = req.headers["x-access-token"];
-
-    if(!token) {
-        res.send("need a token");
-    } else {
-        if(token !== staticToken)
-        {
-            res.json({auth:false,message:"failed to auth"});
-        } else {
-            res.json({auth: true, message:"Authed"});
-        }
-        console.log(token);
-    }
-}
-
 app.get("/", (req, res) => {
     res.json({ message: "Strange Scout Test"})
 })
@@ -100,7 +63,7 @@ app.post('/register', (req,res) => {
                 (err, result) => {
                     if(err)
                     {
-                        res.send({err:err});
+                        result.send({err:err});
                     }
 
                     if(result.length <= 0) {
@@ -109,12 +72,11 @@ app.post('/register', (req,res) => {
                             [username,hash,email,name],
                             (err, result) => {
                                 if(err) throw err;
-                            }
-
-                            
+                                res.send({created:true, message:"account created"});
+                            }                 
                         );
                     } else {
-                        res.send({message:"email already in use"});
+                        res.send({created:false, message:"email already in use"});
                     }
                 }
                 
@@ -145,15 +107,14 @@ app.post('/login', (req,res) => {
                     bcrypt.compare(password, result[0].password, (error, response) => {
                         if(response)
                         {
-                            /*
-                            const id = result[0].id
-                            const token = jwt.sign({id}, "jwtSecret", {
-                                expiresIn:300,
-                            })
-                            */
-
-                            const token = staticToken;
-
+                            const token = jwt.sign(
+                                {
+                                    userId: result[0].id,
+                                    userEmail: result[0].password,
+                                },
+                                "RANDOM-TOKEN",
+                                {expiresIn:"24h"}
+                            );
                             req.session.user = result;
                             res.json({auth: true, token: token, result:result});
                         }
@@ -164,37 +125,10 @@ app.post('/login', (req,res) => {
     } 
 });
 
-app.get('/isUserAuth', testToken,(req,res) => {
-    res.send("You are authenticated");
+app.get('/isUserAuth', auth,(req,res) => {
+    console.log('sent')
+    res.json({auth:true, message:"You are authenticated"});
 })
-
-/* 
-app.get('/isUserAuth', verifyJWT, (req, res) => {
-    res.send("You are authenticated"); 
-})
-*/
-
-/*
-app.post('/auth', function(req,res) {
-    const email = req.body.email;
-    const password = req.body.password;
-    
-
-    if(email && password) {
-        console.log(email + " " + password);
-        connection.query('SELECT * FROM accounts WHERE email = ? AND password = ?',[email,password], function(error,results,fields){
-            if(error) throw error;
-
-            if(results.length > 0) {
-                console.log('correct');
-                
-                
-            }
-        });
-    }
-
-})
-*/
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT,() => {

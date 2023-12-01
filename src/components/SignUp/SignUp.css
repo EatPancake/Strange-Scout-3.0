@@ -47,3 +47,8 @@ img.signup-image{
 button.signup-button:hover {
     background: grey;
 }
+
+button.switch-button {
+    border: 0px;
+    background: transparent;
+}

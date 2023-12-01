@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from 'axios';
+import {useNavigate} from "react-router-dom"
 
 import './SignUp.css';
 import logo from '../imgs/tripleStrange.png'
@@ -12,7 +13,26 @@ export default function SignUp() {
     const [name, setName] = useState('');
 
     const [createdStatus, SetCreatedStatus] = useState('');
+
+    const Navigate = useNavigate();
     
+    const userAuthenticated = () => {
+        if(localStorage.getItem('token'))
+        {
+            try{
+                axios.get("http://localhost:8080/isUserAuth", {
+                headers: {
+                    "x-access-token":localStorage.getItem("token"),
+                },
+            }).then((response) => {
+                console.log(response);
+                Navigate("/auth/dashboard")
+            });
+            } catch(err) {
+                console.log("no token");
+            }
+        }
+    }
 
     const register = () => {
         axios.post("http://localhost:8080/register", {
@@ -22,9 +42,19 @@ export default function SignUp() {
             name:name
         }).then(res => {
             SetCreatedStatus(JSON.stringify(res));
+            if(res.data.created)
+            {
+                Navigate("/login");
+            }
         })
     };
 
+    const switchL = () => {
+        Navigate("/login");
+    }
+
+
+    userAuthenticated();
 
     return(
         <div className="signup">
@@ -52,6 +82,9 @@ export default function SignUp() {
                 </label>
                 <div>
                     <button className="signup-button" onClick={register}>Create Account</button>
+                </div>
+                <div>
+                    <button className="switch-button" onClick={switchL}> Login </button>   
                 </div>
 
             <h1>{createdStatus}</h1>
