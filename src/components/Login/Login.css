@@ -1,15 +1,15 @@
 body{
-    background: #dddddd;
+    background: #282A36;
 }
 
 div .login {
     
     width: 300px;
     border: 15px solid;
-    background: white;
+    background: #44475A;
     border-color: transparent;
     border-radius: 15px;
-    box-shadow: 0px 0px 10px gray ;
+    box-shadow: 0px 0px 10px #44475A ;
     padding:50px;
     margin:20px;
 
@@ -19,6 +19,7 @@ div .login {
     position: relative;
     top: 50%;
     transform: translateY(50%);
+    color:white;
     
 }
 
@@ -28,14 +29,20 @@ button.login-button{
     width:200px;
     height: 50px;
     border-color: transparent;
-    background: lightgray;
+    background: #FFB86C;
 
 }
 
 input.login-input{
    border: 0px;
-   box-shadow: 0px 1px 1px gray;
+   box-shadow: 0px 1px 1px #282A36;
+   background: #44475A;
    outline: 0px;
+   color: white;
+}
+
+.login-input input::backdrop{
+    background: #44475A;
 }
 
 img.login-image{
@@ -45,5 +52,9 @@ img.login-image{
 }
 
 button.login-button:hover {
-    background: grey;
+    background: #ffce99;
+}
+
+.login-status {
+    color:#FF5555;
 }

@@ -109,8 +109,8 @@ app.post('/login', (req,res) => {
                         {
                             const token = jwt.sign(
                                 {
-                                    userId: result[0].id,
-                                    userEmail: result[0].password,
+                                    userEmail: result[0].email,
+                                    userPswd: result[0].password,
                                 },
                                 "RANDOM-TOKEN",
                                 {expiresIn:"24h"}

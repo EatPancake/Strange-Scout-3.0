@@ -41,7 +41,7 @@ export default function SignUp() {
             email:email,
             name:name
         }).then(res => {
-            SetCreatedStatus(JSON.stringify(res));
+            SetCreatedStatus(JSON.stringify(res.data.message).replace('"','').replace('"',''));
             if(res.data.created)
             {
                 Navigate("/login");
@@ -60,6 +60,7 @@ export default function SignUp() {
         <div className="signup">
             <h1>Sign up</h1>
             <img className="signup-image"src={logo} alt="Triple Strange Logo"></img>
+            <p className="signup-status">{createdStatus}</p>
                 <label>
                     <p>Email</p>
                     <input className="signup-input" type="email" placeholder="Email"
@@ -86,8 +87,6 @@ export default function SignUp() {
                 <div>
                     <button className="switch-button" onClick={switchL}> Login </button>   
                 </div>
-
-            <h1>{createdStatus}</h1>
         </div>
     );
 }

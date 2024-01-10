@@ -8,6 +8,7 @@ import SignUp from '../SignUp/SignUp'
 import useToken from './useToken';
 import Auth from '../isAuth/isAuth';
 import Home from '../Home/Home';
+import Logout from '../Logout/Logout'
 import { useContext } from 'react';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/home" element={<Home/>}/>
         <Route path="/login" element={<Login setToken={setToken}/>}/>
         <Route path="/signup" element={<SignUp/>}/>
+        <Route path='/logout' element={<Logout/>}/>
       </Routes>
     </BrowserRouter>
   );

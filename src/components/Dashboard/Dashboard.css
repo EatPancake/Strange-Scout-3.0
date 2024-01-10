@@ -1,0 +1,10 @@
+div.Dashboard-matches {
+    width: 100px;
+    height: 30%;
+    background: #44475A;
+    border-radius: 15px;
+}
+
+.scouting-text {
+    color: white;
+}

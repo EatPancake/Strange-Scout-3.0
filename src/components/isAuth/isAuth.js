@@ -16,7 +16,6 @@ const Auth = () => {
     //setAuth(isUserAuth() ? true : false);
     const token = localStorage.getItem("token");
     let isAuth;
-
     if(token) {
         isAuth = isUserAuth(token);
     } else {

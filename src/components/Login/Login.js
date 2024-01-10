@@ -11,8 +11,6 @@ import Dashboard from "../Dashboard/Dashboard";
 
 export default function Login({setToken}) {
 
-    const [switchSign, setLogin] = useState(true);
-
     const [email , setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -27,16 +25,12 @@ export default function Login({setToken}) {
             email: email,
             password: password
         }).then(response => {
-            if(!response.data.auth) {
-                setLoginStatus(false);
-            } else {
-
-                console.log(response.data);
-                console.log(response.data.token);
+            setLoginStatus(response.data.message)
+            if(response.data.auth) {
                 setToken(response.data.token);
-                setLoginStatus(true);
                 Navigate("/auth/dashboard")
             }
+
         })
     };
 
@@ -49,7 +43,6 @@ export default function Login({setToken}) {
                     "x-access-token":localStorage.getItem("token"),
                 },
             }).then((response) => {
-                console.log(response);
                 Navigate("/auth/dashboard")
             });
             } catch(err) {
@@ -71,6 +64,7 @@ export default function Login({setToken}) {
             <div className="login">
                 <h1>Login</h1>
                 <img className="login-image" src={logo} alt="Triple Strange Logo"></img>
+                <p className="login-status">{loginStatus}</p>
                 <label className='login-label'>
                     <p>Email</p>
                     <input className="login-input" type="email" placeholder="Email"
