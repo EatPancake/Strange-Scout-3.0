@@ -130,6 +130,11 @@ app.get('/isUserAuth', auth,(req,res) => {
     res.json({auth:true, message:"You are authenticated"});
 })
 
+app.post('/submit',auth,(req, res) => {
+    console.log(req);
+
+})
+
 const PORT = process.env.PORT || 8080;
 app.listen(PORT,() => {
     console.log(`Server is running on port ${PORT}.`);
