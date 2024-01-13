@@ -15,15 +15,10 @@ const Auth = () => {
     //const [isAuth, setAuth] = useState(false); 
     //setAuth(isUserAuth() ? true : false);
     const token = localStorage.getItem("token");
-    let isAuth;
+    let isAuth = false;
     if(token) {
         isAuth = isUserAuth(token);
-    } else {
-        isAuth = false;
     }
-    
-
-    console.log(isAuth);
 
     return isAuth ? <Outlet/> : <Navigate to="/login"/>;
 }

@@ -12,7 +12,7 @@ module.exports = async (request, response, next) => {
 
         next();
     } catch (error) {
-        response.status(401).json({
+        response.json({
             message :  "Invalid Response"
         })
     }

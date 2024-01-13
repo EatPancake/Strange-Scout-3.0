@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from 'axios';
 import "./Scouting.css"
 
@@ -134,10 +135,6 @@ export default function Scouting() {
         })
         
     }
-
-
-
-
 
     return(
         <div>
