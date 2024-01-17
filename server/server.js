@@ -126,12 +126,16 @@ app.post('/login', (req,res) => {
 });
 
 app.get('/isUserAuth', auth,(req,res) => {
-    console.log('sent')
+    
+    console.log(req.user.userEmail + " authed")
     res.json({auth:true, message:"You are authenticated"});
 })
 
 app.post('/submit',auth,(req, res) => {
-    console.log(req);
+
+    let email = req.user.userEmail;
+    console.log(email)
+    
 
 })
 

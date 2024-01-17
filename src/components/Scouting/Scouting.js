@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import axios from 'axios';
 import "./Scouting.css"
 
@@ -30,11 +30,13 @@ async function isUserAuth(token){
 
 export default function Scouting() {
 
-    const [eventCode, setEventCode] = useState("");
-    const [roundNumber, setRoundNumber] = useState(0);
-    const [teamNumber, setTeamNumber] = useState(0);
-    const [alliance, setAlliance] = useState(0);
-    const [position, setPosition] = useState(0);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const [eventCode, setEventCode] = useState(searchParams.get("code"))
+    const [matchNumber, setMatchNumber] = useState(searchParams.get("match"));
+    const [teamNumber, setTeamNumber] = useState(searchParams.get("team"));
+    const [alliance, setAlliance] = useState(searchParams.get("alliance"));
+    const [position, setPosition] = useState(searchParams.get("position"));
 
 
     const [aAmp,setAAmp] = useState(0);
@@ -59,12 +61,15 @@ export default function Scouting() {
 
     const [score, setScore] = useState(0);
 
-    const checkRoundData = () => {
+    
+    console.log(searchParams.get("test"))
+
+    const checkMatchData = () => {
         if(eventCode.length !== 9)
         {
             return false;
         }
-        else if(roundNumber === 0)
+        else if(matchNumber === 0)
         {
             return false;
         }
@@ -112,7 +117,7 @@ export default function Scouting() {
         calculateScore()
         axios.post("http://localhost:8080/submit", {
             eventCode : eventCode,
-            roundNumber : roundNumber,
+            matchNumber : matchNumber,
             teamNumber : teamNumber,
             alliance : alliance,
             position : position,
@@ -146,29 +151,29 @@ export default function Scouting() {
             </div>
             <div>
                 {infoShow === true && <div className="scouting-data">
-                    <h1 className="scouting-text">Round Info</h1>
+                    <h1 className="scouting-text">Match Info</h1>
                     <label className="scouting-text">
                         <p>Event Code</p>
-                        <input className="event-code" type="text" placeholder="event code" onChange={e => setEventCode(e.target.value)}/>
+                        <input className="event-code" type="text" placeholder="event code" defaultValue={searchParams.get("code")}onChange={e => setEventCode(e.target.value)}/>
                     </label>
                     <label className="scouting-text">
-                        <p>Round Number</p>
-                        <input className="round-number" type="number" placeholder="0" onChange={e => setRoundNumber(e.target.value)}/>
+                        <p>Match Number</p>
+                        <input className="match-number" type="number" placeholder="0" defaultValue={searchParams.get("match")}onChange={e => setMatchNumber(e.target.value)}/>
                     </label>
                     <label className="scouting-text">
                         <p>Team Number</p>
-                        <input className="team-number" type="number" placeholder="0000" onChange={e => setTeamNumber(e.target.value)}/>
+                        <input className="team-number" type="number" placeholder="0000" defaultValue={searchParams.get("team")}onChange={e => setTeamNumber(e.target.value)}/>
                     </label>
                     <label className="scouting-text">
                         <p>Alliance</p>
-                        <select className="bot-alliance" onChange={e => setAlliance(e.target.value)}>
+                        <select className="bot-alliance" defaultValue={searchParams.get("alliance")}onChange={e => setAlliance(e.target.value)}>
                             <option value={0}>Red</option>
                             <option value={1}>Blue</option>
                         </select>
                     </label>
                     <label className="scouting-text">
                         <p>Position</p>
-                        <select className="bot-position" onChange={e => setPosition(e.target.value)}>
+                        <select className="bot-position" defaultValue={searchParams.get("position")} onChange={e => setPosition(e.target.value)}>
                             <option value={0}>Position 1</option>
                             <option value={1}>Position 2</option>
                             <option value={2}>Position 3</option>
@@ -176,7 +181,7 @@ export default function Scouting() {
                     </label>
                     <div>
                         <label className="scouting-text">
-                            <button className="scouting-button" onClick={() => {setInfo(!checkRoundData()); setAuto(checkRoundData());}}>Continue</button>
+                            <button className="continue-button" onClick={() => {setInfo(!checkMatchData()); setAuto(checkMatchData());}}>Continue</button>
                         </label>
                     </div>
                     
@@ -200,9 +205,10 @@ export default function Scouting() {
                     </div> 
                     <div>
                         <label className="scouting-text">
-                            <button className="scouting-button" onClick={() => {setAuto(false); setTele(true);}}>Continue</button>
+                            <button className="continue-button" onClick={() => {setAuto(false); setTele(true);}}>Continue</button>
                         </label>
-                    </div>                           
+                    </div>
+                                              
                 </div>}
                 {teleShow  === true && <div className="scouting-tele">
                     <h1 className="scouting-text">Teleop</h1>
@@ -220,18 +226,18 @@ export default function Scouting() {
                         <label className="scouting-text">
                             <button className="scouting-button" onClick={() => {setTSpeakerAmp(tspeakerAmp+1)}}>Speaker Amplified</button>
                         </label> 
-                    </div>  
+                    </div>
+                    <div>
+                        <label className="scouting-text">
+                            <button className="scouting-button" onClick={() => {setTtrap(tTrap+1);}}>Scored Trap</button>
+                        </label> 
+                    </div>   
                     <h3 className="scouting-text">End Game</h3>  
                     {!isParked && <div>
                         <label className="scouting-text">
                             <button className="scouting-button" onClick={() => {setParked(true);}}>Parked</button>
                         </label>
                     </div>}
-                    <div>
-                        <label className="scouting-text">
-                            <button className="scouting-button" onClick={() => {setTtrap(tTrap+1);}}>Scored Trap</button>
-                        </label> 
-                    </div> 
                     <div>
                         <label className="scouting-text">
                             <button className="scouting-button" onClick={() => {setTonStange(tonStage+1)}}>On Stage</button>
@@ -252,10 +258,9 @@ export default function Scouting() {
                             </select>
                         </label>
                     </div>
-                    <p>{score}</p>
                     <div>
                         <label className="scouting-text">
-                            <button className="scouting-button" onClick={() =>{Submit();}}>Submit</button>
+                            <button className="continue-button" onClick={() =>{Submit();}}>Submit</button>
                         </label>
                     </div>      
                 </div>}
