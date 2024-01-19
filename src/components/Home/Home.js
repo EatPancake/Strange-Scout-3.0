@@ -8,6 +8,7 @@ export default function Home() {
                 <a className="active" href="/home">Home</a>
                 <a href='/auth/dashboard'>Dashboard</a>
                 <a href='/auth/scouting'>Scout</a>
+                <a href='/auth/pit-scouting'>Pit Scout</a>
                 <a href="/login">Login</a>
                 <a href="/signup">Sign-up</a>
             </div>

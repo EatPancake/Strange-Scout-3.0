@@ -6,19 +6,34 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const config = require('./config/config.json');
+const fs = require('fs')
+
+
+var currentEvent = config.siteData.currentEvent;
+
+
+
 
 const saltRound = 10;
 
 const auth = require("./auth");
+const { default: axios } = require("axios");
+const { match } = require("assert");
 
 const connection = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'password',
-    database:'nodelogin'
+    host: config.database.host,
+    user: config.database.user,
+    password: config.database.password,
+    database: config.database.database
 });
 
 const app = express();
+
+async function _getEventMatches(_event){
+    return axios.get(`https://api.statbotics.io/v2/matches/event/${_event}`, {})
+}
+
 app.use(express.json());
 
 app.use(cors({
@@ -42,6 +57,54 @@ app.use (
 
 app.get("/", (req, res) => {
     res.json({ message: "Strange Scout Test"})
+})
+
+app.get('/event', (req,res) => {
+    res.json({event:currentEvent})
+})
+
+app.post('/setEvent',auth,(req,res) => {
+    console.log("set called");
+    
+    const email = req.user.userEmail;
+    const event = req.body.event;
+    const admins = config.siteData.admins;
+    
+    for(var i = 0; i < admins.length; i++)
+    {
+        if(admins[i] === email)
+        {
+            console.log("admin true")
+            if(event.length === 9)
+            {
+                console.log("set event")
+                config.siteData.currentEvent = event;
+                currentEvent = event;
+            }
+        }
+    }
+    
+})
+
+app.get('/updateEventMatches',auth,(req,res) => {
+    console.log('smth')
+    const email = req.user.userEmail;
+    const admins = config.siteData.admins;
+    
+    for(var i = 0; i < admins.length; i++)
+    {
+        if(admins[i] === email)
+        {
+            console.log("working")
+            const json = _getEventMatches(currentEvent);
+            res.send(JSON.stringify(json));
+        }
+    }
+
+})
+
+app.get('/getEventMatches', (req,res) => {
+    axios.get('')
 })
 
 app.post('/register', (req,res) => {

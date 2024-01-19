@@ -12,21 +12,28 @@ const ScoutMatches = ({ items }) => {
     
     return(
         <>
-        {items.map((item) => 
-            <div className="Dashboard-matches">
-                <h1 className="dashboard-text">Match {item.match}</h1>
-                <h2 className="dashboard-text">{item.team}</h2>
-                <div className="dashboard-go">
-                    <button className="dashboard-go" onClick={() => {ScoutUrl(
-                        item.code,
-                        item.match,
-                        item.team,
-                        item.alliance)}}>Go</button>
-                </div>
-                
-            </div>
-            )
-        }
+        {items.length > 0 ? (
+            <>
+                {items.map((item) => 
+                    <div className="Dashboard-matches">
+                        <h1 className="dashboard-text">Match {item.match}</h1>
+                        <h2 className="dashboard-text">{item.team}</h2>
+                        <div className="dashboard-go">
+                            <button className="dashboard-go" onClick={() => {ScoutUrl(
+                                item.code,
+                                item.match,
+                                item.team,
+                                item.alliance)}}>Go</button>
+                        </div>
+                        
+                    </div>
+                    )
+                }
+            </>
+        ) : ( 
+            <p>No Current Matches</p>
+        )}
+        
         </>
     )
 }

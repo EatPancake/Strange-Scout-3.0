@@ -147,6 +147,7 @@ export default function Scouting() {
                 <a href="/home">Home</a>
                 <a href='/auth/dashboard'>Dashboard</a>
                 <a className='active'href='/auth/scouting'>Scout</a>
+                <a href='/auth/pit-scouting'>Pit Scout</a>
                 <a className='nav-logout' href='/logout'>Logout</a>
             </div>
             <div>

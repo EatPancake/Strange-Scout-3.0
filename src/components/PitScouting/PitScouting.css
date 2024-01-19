@@ -1,0 +1,51 @@
+.pit-text {
+    color:white;
+    font-size: 20px;
+}
+
+input.pit-weight,.pit-perimeter{
+    width: 100px;
+    font-size: 15px;
+    border: 0px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 1px #282A36;
+    background: #282A36;
+    outline: 0px;
+    color: white;
+    text-align: center;
+}
+
+div.pit-input {
+    margin:auto;
+    width: 250px;
+    height: 50px;
+    border-radius: 5px;
+    background: #44475A;
+    margin: 5px;
+    display: inline-block;
+}
+
+.drawing-area {
+    display: inline-block;
+}
+
+img.pit-field {
+    width:100%;
+}
+
+div.pitscout-info {
+    text-align: center;
+}
+
+div.pitscout-botinfo {
+    text-align: center;
+}
+
+
+.pitscout-botinfo {
+    text-align: center;
+}
+
+input.pit-input {
+    
+}

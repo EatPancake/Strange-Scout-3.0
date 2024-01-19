@@ -1,0 +1,14 @@
+{
+    "database" : {
+        "host" : "localhost",
+        "user" : "root",
+        "password" : "password",
+        "database" : "nodelogin"
+    },
+
+    "siteData" : {
+        "currentEvent" : "2023ncash",
+        "admins" : ["test@test.com"]
+
+    }
+}

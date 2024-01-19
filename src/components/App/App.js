@@ -1,6 +1,6 @@
 
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
 import Login from '../Login/Login';
 import Dashboard from '../Dashboard/Dashboard';
 import Scouting from '../Scouting/Scouting';
@@ -9,11 +9,11 @@ import useToken from './useToken';
 import Auth from '../isAuth/isAuth';
 import Home from '../Home/Home';
 import Logout from '../Logout/Logout'
+import PitScouting from '../PitScouting/PitScouting'
 import { useContext } from 'react';
 
 function App() {
   const { token, setToken } = useToken();
-   
 
   // if(token) {
   //   return (  
@@ -26,7 +26,9 @@ function App() {
         <Route path="/auth" element={<Auth/>}>
           <Route path='/auth/dashboard' element={<Dashboard/>}/> 
           <Route path='/auth/scouting'element={<Scouting/>}/>
+          <Route path='/auth/pit-scouting' element={<PitScouting/>}/>
         </Route>
+        <Route path="/" element={<Home/>}/>
         <Route path="/home" element={<Home/>}/>
         <Route path="/login" element={<Login setToken={setToken}/>}/>
         <Route path="/signup" element={<SignUp/>}/>
