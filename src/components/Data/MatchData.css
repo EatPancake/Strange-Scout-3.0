@@ -1,0 +1,39 @@
+div.match-data {
+    background: #44475A;
+    width: 500px;
+    height: 100px;
+    margin: 20px;
+    border-radius: 25px;   
+}
+
+.data-blue {
+    color: #8BE9FD;
+    display: inline-block;
+}
+
+.data-red {
+    color: #FF5555;
+    display: inline-block;
+}
+
+p.data-text {
+    color: white;
+    display: inline-block;
+}
+
+td {
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #44475A;
+}
+
+.tableColor {
+    color:white;
+}
+
+table {
+    width: 100%;
+}
+

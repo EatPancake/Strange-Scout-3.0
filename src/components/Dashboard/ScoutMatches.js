@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 const ScoutMatches = ({ items }) => {
     const Navigate = useNavigate();
 
-    const ScoutUrl = (code,match,team,alliance) => {
-        const url = `/auth/scouting/?code=${code}&match=${match}&team=${team}&alliance=${alliance}`;
+    const ScoutUrl = (code,match,team,alliance,playoff) => {
+        const url = `/auth/scouting/?code=${code}&match=${match}&team=${team}&alliance=${alliance}&playoff=${playoff}`;
         return Navigate(url)
     }
 
@@ -23,7 +23,8 @@ const ScoutMatches = ({ items }) => {
                                 item.code,
                                 item.match,
                                 item.team,
-                                item.alliance)}}>Go</button>
+                                item.alliance,
+                                item.playoff)}}>Go</button>
                         </div>
                         
                     </div>

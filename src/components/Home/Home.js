@@ -7,6 +7,7 @@ export default function Home() {
             <div className="topnav">
                 <a className="active" href="/home">Home</a>
                 <a href='/auth/dashboard'>Dashboard</a>
+                <a href='/auth/data'>Data</a>
                 <a href='/auth/scouting'>Scout</a>
                 <a href='/auth/pit-scouting'>Pit Scout</a>
                 <a href="/login">Login</a>

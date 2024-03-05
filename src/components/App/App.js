@@ -10,6 +10,10 @@ import Auth from '../isAuth/isAuth';
 import Home from '../Home/Home';
 import Logout from '../Logout/Logout'
 import PitScouting from '../PitScouting/PitScouting'
+import Data from '../Data/Data'
+import Match from '../Match/Match'
+import Team from '../Team/Team';
+import EventData from '../EventData/EventData';
 import { useContext } from 'react';
 
 function App() {
@@ -27,6 +31,10 @@ function App() {
           <Route path='/auth/dashboard' element={<Dashboard/>}/> 
           <Route path='/auth/scouting'element={<Scouting/>}/>
           <Route path='/auth/pit-scouting' element={<PitScouting/>}/>
+          <Route path='/auth/data' element={<Data/>}/>
+          <Route path='/auth/match' element={<Match/>}/>
+          <Route path='/auth/team' element={<Team/>}/>
+          <Route path='/auth/event' element={<EventData/>}/>
         </Route>
         <Route path="/" element={<Home/>}/>
         <Route path="/home" element={<Home/>}/>

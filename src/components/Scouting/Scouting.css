@@ -99,13 +99,130 @@ h1 h3.scouting-text{
 select.tele-harmony{
     text-align: center;
     border-radius: 50px;
-    width:200px;
-    height: 50px;
+    width:290px;
+    height: 90px;
     border-color: transparent;
     background: #FFB86C;
     color:white;
+    margin-top: 5px;
 }
 .scouting-text {
     color: white;
 }
 
+
+div.scouting-pickup {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #44475A;
+    display: inline-block;
+}
+
+button.scouting-pickup {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: transparent;
+    background: #FFB86C;
+    color:white;
+    text-align: center;
+    margin-top: 5px;
+}
+button.scouting-pickup:hover {
+    background: #ffe1c2;
+    color: black;
+}
+
+div.scouting-scored {
+    width: 195px;
+    height: 100px;
+    border-radius: 100px;
+    background: #44475A;
+    display: inline-block;
+    text-align: left;
+    
+}
+button.scouting-scored {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: transparent;
+    background: #FFB86C;
+    color:white;
+    text-align: center;
+    margin-top: 5px;
+    margin-left: 5px;
+    
+}
+button.scouting-scored:hover {
+    background: #ffe1c2;
+    color: black;
+}
+div.scouting-container {
+    display: inline-block;
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5%;
+}
+
+div.scouting-row{
+    text-align: center;   
+}
+
+div.scouting-dropped{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #44475A;
+    display: inline-block;
+    
+}
+
+div.scouting-mobility {
+    width: 300px;
+    height: 100px;
+    border-radius: 100px;
+    background: #44475A;
+    display: inline-block;
+}
+
+button.scouting-mobility {
+    width:290px;
+    height: 90px;
+    border-radius: 100px;
+    border: transparent;
+    background: #FFB86C;
+    color:white;
+    text-align: center;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+button.scouting-mobility:hover {
+    background: #ffe1c2;
+    color: black;
+}
+
+div.scouting-score-tele{
+    width: 195px;
+    height: 195px;
+    border-radius: 10px;
+    background: #44475A;
+    display: inline-block;
+    text-align: left;
+}
+
+button.scouting-placehold {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: transparent;
+    background: #44475A;
+    color:#44475A;
+    text-align: center;
+    margin-top: 5px;
+    margin-left: 5px;
+    display: inline-block;
+}

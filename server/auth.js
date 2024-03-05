@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 module.exports = async (request, response, next) => {
+    console.log("auth called")
     try {
         const token =  request.headers["x-access-token"].replace('"','').replace('"','');
 

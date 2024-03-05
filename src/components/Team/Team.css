@@ -1,0 +1,44 @@
+div.Team {
+    text-align: center;
+}
+
+div.Team-Data{
+    text-align: center;
+}
+
+div.Team-Score{
+    border-radius: 10px;
+    text-align: center;
+    width: 50%;
+    height: 25px;
+    background: #44475A;
+    margin: auto;
+}
+
+p.Team-Text {
+    padding: auto;
+    padding-top: 4px;
+}
+
+.Team-Text {
+    color:white;
+}
+
+td {
+    text-align: center;
+}
+
+a.Team-Url {
+    color:white;
+}
+.TeamtableColor {
+    color:white;
+}
+table {
+    width: 100%;
+}
+table {
+    display: inline-table
+}
+
+

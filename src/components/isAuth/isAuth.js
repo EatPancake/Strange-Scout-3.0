@@ -3,7 +3,7 @@ import axios from 'axios';
 import React from "react";
 
 async function isUserAuth(token){
-    return axios.get("http://localhost:8080/isUserAuth", {
+    return await axios.get("http://localhost:8080/isUserAuth", {
         headers: {
             "x-access-token": token,
         },

@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql");
-const bodyparser = require("body-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const session = require("express-session");
@@ -12,14 +11,9 @@ const fs = require('fs')
 
 var currentEvent = config.siteData.currentEvent;
 
-
-
-
 const saltRound = 10;
 
 const auth = require("./auth");
-const { default: axios } = require("axios");
-const { match } = require("assert");
 
 const connection = mysql.createConnection({
     host: config.database.host,
@@ -29,10 +23,6 @@ const connection = mysql.createConnection({
 });
 
 const app = express();
-
-async function _getEventMatches(_event){
-    return axios.get(`https://api.statbotics.io/v2/matches/event/${_event}`, {})
-}
 
 app.use(express.json());
 
@@ -82,29 +72,7 @@ app.post('/setEvent',auth,(req,res) => {
                 currentEvent = event;
             }
         }
-    }
-    
-})
-
-app.get('/updateEventMatches',auth,(req,res) => {
-    console.log('smth')
-    const email = req.user.userEmail;
-    const admins = config.siteData.admins;
-    
-    for(var i = 0; i < admins.length; i++)
-    {
-        if(admins[i] === email)
-        {
-            console.log("working")
-            const json = _getEventMatches(currentEvent);
-            res.send(JSON.stringify(json));
-        }
-    }
-
-})
-
-app.get('/getEventMatches', (req,res) => {
-    axios.get('')
+    } 
 })
 
 app.post('/register', (req,res) => {
@@ -141,13 +109,10 @@ app.post('/register', (req,res) => {
                     } else {
                         res.send({created:false, message:"email already in use"});
                     }
-                }
-                
+                }         
             )
         }
     })
-
-    
 })
 
 app.post('/login', (req,res) => {
@@ -195,15 +160,121 @@ app.get('/isUserAuth', auth,(req,res) => {
 })
 
 app.post('/submit',auth,(req, res) => {
-
+    console.log('hey')
     let email = req.user.userEmail;
+    let data = req.body;
     console.log(email)
-    
+    connection.query(
+        "INSERT INTO matches (eventid, MatchNumber, Matchid, Playoff, TeamNumber, Alliance, Position, Scouter, A_Amp, A_Speaker, A_Moved, A_Pickup, A_Dropped, T_Amp, T_Speaker, T_SpeakerAmp, T_OnStage, T_SpotLight, T_Harmony, T_Trap, T_Parked, T_Pickup, T_Dropped, score, cycleTime) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        [data.eventCode,data.matchNumber, data.Matchid, data.Playoff, data.teamNumber, data.alliance, data.position, email, data.A_AMP, data.A_Speaker, data.A_Mobility, data.A_Pickup, data.A_Dropped, data.T_AMP, data.T_Speaker, data.T_SpeakerAMP, data.T_Trap, data.T_OnStage, data.T_Spotlight, data.T_Harmony, data.T_Parked, data.T_Pickup, data.T_Dropped, data.score, data.cycleTime],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+        }  
+    );
+})
 
+app.post('/submitPit',auth,(req, res) => {
+    console.log('hey')
+    let email = req.user.userEmail;
+    let data = req.body;
+    connection.query(
+        "INSERT INTO pitscout (eventid, TeamNumber, Weight, Perimeter, Amp, Speaker, OnStage, Trap, Note, AutoImage, Scouter) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+        [data.eventCode, data.teamNumber, data.weight, data.perimeter, data.amp, data.speaker, data.onStage, data.trap, data.note, data.autoImage ,email],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+            res.send("submitted");
+        }  
+    );
+})
+
+app.get('/updateData', (req, res) => {
+    connection.query(
+        "SELECT * FROM matches", (err, results) => {
+            if(err) {
+                return (err);
+            }
+
+            fs.writeFile('data.json',JSON.stringify(results), function(error) {
+                if(error) {
+                    return console.log(error);
+                }
+                console.log("JSON db updated");
+            })
+
+            console.log(results);
+            res.send(results);
+        })
+})
+
+app.get('/getData',auth, (req,res) => {
+    // fs.readFile("data.json", "utf-8", function (err, data) {
+    //     if(err)
+    //         console.log(err)
+
+    //     const out = JSON.parse(data);
+    // });
+
+    const out = JSON.parse(fs.readFileSync('data.json', 'utf-8'));
+    console.log(req.user.userEmail + ' requested data')
+    res.send(out)
+    console.log('sent ' + req.user.userEmail + ' data')
+})
+
+app.get('/getMatch', auth, (req,res) => {
+    connection.query(
+        "SELECT * FROM matches WHERE Matchid = ?",
+        [req.headers["matchid"]],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+    
+            if (result.length > 0) {
+                res.json(result[0]);
+            } else(res.send({message: "No data for this match"}));
+        }  
+    );
+})
+
+app.get('/getTeam', auth, (req,res) => {
+    console.log(req.headers["team"])
+    connection.query(
+        "SELECT * FROM matches WHERE TeamNumber = ?",
+        [req.headers["team"]],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+    
+            if (result.length > 0) {
+                res.json(result);
+            } else(res.send({message: "No data for this team"}));
+        }  
+    );
+})
+
+app.get('/getEvent', auth, (req,res) => {
+    console.log(req.headers["event"])
+    connection.query(
+        "SELECT * FROM matches WHERE eventid = ?",
+        [req.headers["event"]],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+    
+            if (result.length > 0) {
+                res.json(result);
+            } else(res.send({message: "No data for this event"}));
+        }  
+    );
 })
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT,() => {
     console.log(`Server is running on port ${PORT}.`);
 });
-

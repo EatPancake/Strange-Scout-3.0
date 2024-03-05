@@ -1,0 +1,23 @@
+a.Match-Url {
+    color:white;
+    padding-left: 7%;
+    padding-top: auto;
+}
+
+div.Match-Red {
+    width: 200px;
+    height: 50px;
+    background: #44475A;
+    text-align: center;
+    border-color: transparent;
+    border-radius: 20px;
+}
+
+div.Match-Teams {
+    text-align: center;
+    padding: auto;
+}
+
+div.Match {
+    text-align: center;
+}
