@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom"
 
 import './SignUp.css';
 import logo from '../imgs/tripleStrange.png'
+import api from '../../api.json'
 
 export default function SignUp() {
 
@@ -20,7 +21,7 @@ export default function SignUp() {
         if(localStorage.getItem('token'))
         {
             try{
-                axios.get("http://localhost:8080/isUserAuth", {
+                axios.get(`${api.api}/isUserAuth`, {
                 headers: {
                     "x-access-token":localStorage.getItem("token"),
                 },
@@ -35,7 +36,7 @@ export default function SignUp() {
     }
 
     const register = () => {
-        axios.post("http://localhost:8080/register", {
+        axios.post(`${api.api}/register`, {
             username:username,
             password:password,
             email:email,

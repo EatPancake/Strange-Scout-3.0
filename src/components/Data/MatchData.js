@@ -44,7 +44,7 @@ const MatchData = ({ items }) => {
                         {items.map((item) => 
                                 <tr>
                                     <td className="tableColor"><a className="Team-Url" href={`/auth/event/?event=${item.eventid}`}>{item.eventid}</a></td>
-                                    <td className="tableColor">{item.MatchNumber}</td>
+                                    <td className="tableColor"><a className="Team-Url" href={`/auth/match/?match=${item.Matchid}`}>{item.MatchNumber}</a></td>
                                     <td className="tableColor"><a className="Team-Url" href={`/auth/team/?team=${item.TeamNumber}`}>{item.TeamNumber}</a></td>
                                     <td className="tableColor">{item.Score}</td>
                                     <td className="tableColor">{item.Alliance ? "red" : "blue"}</td>

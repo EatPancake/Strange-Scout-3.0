@@ -1,9 +1,10 @@
 import {Navigate, Outlet} from "react-router-dom"
 import axios from 'axios';
 import React from "react";
+import api from '../../api.json'
 
 async function isUserAuth(token){
-    return await axios.get("http://localhost:8080/isUserAuth", {
+    return await axios.get(`${api.api}/isUserAuth`, {
         headers: {
             "x-access-token": token,
         },

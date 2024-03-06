@@ -6,6 +6,7 @@ import '../SignUp/SignUp.css'
 import logo from '../imgs/tripleStrange.png';
 import PropTypes from 'prop-types';
 import Dashboard from "../Dashboard/Dashboard";
+import api from '../../api.json'
 
 //var loginswitch = true;
 
@@ -21,7 +22,7 @@ export default function Login({setToken}) {
     const Navigate = useNavigate();
 
     const login = () => {
-        axios.post("http://localhost:8080/login", {
+        axios.post(`${api.api}/login`, {
             email: email,
             password: password
         }).then(response => {
@@ -38,7 +39,7 @@ export default function Login({setToken}) {
         if(localStorage.getItem('token'))
         {
             try{
-                axios.get("http://localhost:8080/isUserAuth", {
+                axios.get(`${api.api}/isUserAuth`, {
                 headers: {
                     "x-access-token":localStorage.getItem("token"),
                 },

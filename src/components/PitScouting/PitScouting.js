@@ -4,6 +4,7 @@ import axios from "axios";
 import './PitScouting.css'
 import auto from './auto';
 import field from '../imgs/2024Field.png'
+import api from '../../api.json'
 
 export default function PitScouting() {
 
@@ -36,7 +37,7 @@ export default function PitScouting() {
 
 
     const submit = () => {
-        axios.post("http://localhost:8080/submitPit", {
+        axios.post(`${api.api}/submitPit`, {
             eventCode : eventCode,
             teamNumber : teamNumber,
             weight : weight,

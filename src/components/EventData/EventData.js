@@ -2,6 +2,7 @@ import axios from "axios";
 import EventDisplay from "./EventDisplay";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import api from '../../api.json'
 
 export default function EventData() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -14,7 +15,7 @@ export default function EventData() {
 
     useEffect(() => {
         async function getEvent() {
-            return await axios.get("http://localhost:8080/getEvent", {
+            return await axios.get(`${api.api}/getEvent`, {
                 headers: {
                     "x-access-token": localStorage.getItem("token"),
                     "event" : event

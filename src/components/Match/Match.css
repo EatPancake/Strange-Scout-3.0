@@ -1,16 +1,29 @@
 a.Match-Url {
     color:white;
-    padding-left: 7%;
-    padding-top: auto;
+    padding-left: 5%;
+    padding: auto;
+    padding-top: 4px;
+    display: inline-block;
 }
 
 div.Match-Red {
-    width: 200px;
-    height: 50px;
-    background: #44475A;
+    width: 50%;
+    height: 25px;
+    background: #FF5555;
     text-align: center;
     border-color: transparent;
     border-radius: 20px;
+    margin: auto;
+}
+div.Match-Blue {
+    width: 50%;
+    height: 25px;
+    background: #6272A4;
+    text-align: center;
+    border-color: transparent;
+    border-radius: 20px;
+    margin: auto;
+    margin-top: 5%;
 }
 
 div.Match-Teams {
@@ -20,4 +33,33 @@ div.Match-Teams {
 
 div.Match {
     text-align: center;
+}
+
+div.Match-Score {
+    width: 200px;
+    height: 125px;
+    background: #44475A;
+    text-align: center;
+    border-color: transparent;
+    border-radius: 20px;
+    margin: auto;
+    
+}
+
+p.Match-Score-Red {
+    display: inline-block;
+    font-size: 66px;
+    color:#FF5555;
+
+}
+p.Match-Score {
+    display: inline-block;
+    font-size: 66px;
+    color:white;
+}
+
+p.Match-Score-Blue {
+    display: inline-block;
+    font-size: 66px;
+    color:#6272A4;
 }

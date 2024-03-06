@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import './Match.css'
+import api from '../../api.json'
 
 export default function Match() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -26,7 +27,7 @@ export default function Match() {
 
     useEffect(() => {
         async function getMatch() {
-            return await axios.get("http://localhost:8080/getMatch", {
+            return await axios.get(`${api.api}/getMatch`, {
                 headers : {
                     "x-access-token": localStorage.getItem("token"),
                     "matchid" : matchid 
@@ -60,7 +61,17 @@ export default function Match() {
     return(
         <>
             <div className="Match">
-                <h1>{matchid}</h1>
+                <div className='topnav'>
+                    <a href="/home">Home</a>
+                    <a href='/auth/dashboard'>Dashboard</a>
+                    <a className='active' href='/auth/data'>Data</a>
+                    <a href='/auth/scouting'>Scout</a>
+                    <a href='/auth/pit-scouting'>Pit Scout</a>
+                    <a className='nav-logout' href='/logout'>Logout</a>
+                </div>
+
+                <h1 className="Team-Text">{matchid}</h1>
+                <h3 className="Team-Text">Teams</h3>
                 <div className="Match-Teams">
                     <div className="Match-Red">
                         <a className="Match-Url" href={`/auth/team/?team=${sbRed0}`}>{sbRed0}</a>
@@ -73,10 +84,11 @@ export default function Match() {
                         <a className="Match-Url" href={`/auth/team/?team=${sbBlue2}`}>{sbBlue2}</a>
                     </div>
                 </div>
-                <div>
-                    <p>{sbRedScore}</p>
-                    <p>-</p>
-                    <p>{sbBlueScore}</p>
+                <h3 className="Team-Text">Score</h3>
+                <div className="Match-Score">
+                    <p className="Match-Score-Red">{sbRedScore}</p>
+                    <p className="Match-Score"> - </p>
+                    <p className="Match-Score-Blue">{sbBlueScore}</p>
                 </div>
             </div>
         </>

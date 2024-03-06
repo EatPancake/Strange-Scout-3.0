@@ -1,9 +1,10 @@
 import MatchData from "./MatchData"
 import axios from 'axios'
 import React, { useEffect, useState } from "react"
+import api from "../../api.json"
 
 function getData() {
-    return axios.get("http://localhost:8080/getData",{
+    return axios.get(`${api.api}/getData`,{
             headers: {
                 "x-access-token":localStorage.getItem("token")
         }
@@ -11,7 +12,7 @@ function getData() {
 }
 
 function updateData() {
-    axios.get("http://localhost:8080/updateData",{
+    axios.get(`${api.api}/updateData`,{
             headers: {
                 "x-access-token":localStorage.getItem("token")
         }
@@ -33,7 +34,7 @@ export default function Data() {
             await getData().then((response) => {
                 setMatchData(response.data)
             });
-            await sleep(1000);
+            
             setSendData(true);
         }
         getReq();

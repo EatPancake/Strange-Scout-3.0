@@ -3,6 +3,7 @@ import TeamDisplay from "./TeamDisplay";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import './Team.css'
+import api from '../../api.json'
 
 export default function Team() {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -24,7 +25,7 @@ export default function Team() {
 
     useEffect(() => {
         async function getTeam() {
-            return await axios.get("http://localhost:8080/getTeam", {
+            return await axios.get(`${api.api}/getTeam`, {
                 headers: {
                     "x-access-token": localStorage.getItem("token"),
                     "team" : team

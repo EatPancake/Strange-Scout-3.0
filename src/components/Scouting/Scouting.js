@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from 'axios';
 import "./Scouting.css"
+import api from "../../api.json"
 
 // --- Point Values
 
@@ -176,7 +177,7 @@ export default function Scouting() {
             calcScore += (TELE_HARMONY*2);
         }
         var matchid = getMatchID();
-        axios.post("http://localhost:8080/submit", {
+        axios.post(`${api.api}/submit`, {
             eventCode : eventCode,
             matchNumber : matchNumber,
             Matchid : matchid,

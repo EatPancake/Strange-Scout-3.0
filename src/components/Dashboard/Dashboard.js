@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import "./Dashboard.css";
 import ScoutMatches from "./ScoutMatches"
 import axios from 'axios';
+import api from '../../api.json'
 
 export default function Dashboard() {
 
@@ -15,7 +16,7 @@ export default function Dashboard() {
     }
 
     const EventChange = () => {
-        axios.post("http://localhost:8080/setEvent",{
+        axios.post(`${api.api}/setEvent`,{
             event:"2023ncash",
         }, {
             headers:{
@@ -25,7 +26,7 @@ export default function Dashboard() {
     }
 
     const updateEventMatches = () => {
-        axios.get("http://localhost:8080/updateEventMatches",{
+        axios.get(`${api.api}/updateEventMatches`,{
             headers:{
                 "x-access-token":localStorage.getItem("token")
             }
