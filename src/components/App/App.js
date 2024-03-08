@@ -14,6 +14,7 @@ import Data from '../Data/Data'
 import Match from '../Match/Match'
 import Team from '../Team/Team';
 import EventData from '../EventData/EventData';
+import Assign from '../Assign/Assign';
 import { useContext } from 'react';
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
           <Route path='/auth/match' element={<Match/>}/>
           <Route path='/auth/team' element={<Team/>}/>
           <Route path='/auth/event' element={<EventData/>}/>
+          <Route path='/auth/Assign' element={<Assign/>}/>
         </Route>
         <Route path="/" element={<Home/>}/>
         <Route path="/home" element={<Home/>}/>

@@ -1,0 +1,30 @@
+div.assign{
+    text-align: center;
+}
+
+div.assign-box {
+    width: 300px;
+    height: 100px;
+    border-radius: 100px;
+    background: #44475A;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+button.assign-button {
+    width:290px;
+    height: 90px;
+    border-radius: 100px;
+    border: transparent;
+    background: #FFB86C;
+    color:white;
+    text-align: center;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+button.assign-buton:hover {
+    background: #ffe1c2;
+    color: black;
+}

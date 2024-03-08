@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Dashboard.css";
 import ScoutMatches from "./ScoutMatches"
@@ -32,6 +32,19 @@ export default function Dashboard() {
             }
         });
     }
+
+    useEffect(() => {
+        async function getAssignedMatches() {
+            await axios.get(`${api.api}/getAssignedMatches`, {
+                headers: {
+                    "x-access-token" : localStorage.getItem("token")
+                }
+            }).then((res) => {
+                setItems(res.data);
+            });
+        }
+        getAssignedMatches();
+    },[]);
 
     return(
         <div>

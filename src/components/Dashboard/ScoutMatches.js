@@ -5,7 +5,7 @@ const ScoutMatches = ({ items }) => {
     const Navigate = useNavigate();
 
     const ScoutUrl = (code,match,team,alliance,playoff) => {
-        const url = `/auth/scouting/?code=${code}&match=${match}&team=${team}&alliance=${alliance}&playoff=${playoff}`;
+        const url = `/auth/scouting/?code=${code}&match=${match}&team=${team}`;
         return Navigate(url)
     }
 
@@ -16,15 +16,14 @@ const ScoutMatches = ({ items }) => {
             <>
                 {items.map((item) => 
                     <div className="Dashboard-matches">
-                        <h1 className="dashboard-text">Match {item.match}</h1>
-                        <h2 className="dashboard-text">{item.team}</h2>
+                        <h1 className="dashboard-text">Match {item.MatchNumber}</h1>
+                        <h2 className="dashboard-text">{item.TeamNumber}</h2>
                         <div className="dashboard-go">
                             <button className="dashboard-go" onClick={() => {ScoutUrl(
-                                item.code,
-                                item.match,
-                                item.team,
-                                item.alliance,
-                                item.playoff)}}>Go</button>
+                                item.eventid,
+                                item.MatchNumber,
+                                item.TeamNumber,
+                                )}}>Go</button>
                         </div>
                         
                     </div>

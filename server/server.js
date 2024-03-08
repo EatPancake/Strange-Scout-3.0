@@ -141,7 +141,7 @@ app.post('/login', (req,res) => {
                                     userPswd: result[0].password,
                                 },
                                 "RANDOM-TOKEN",
-                                {expiresIn:"24h"}
+                                {expiresIn:"100h"}
                             );
                             req.session.user = result;
                             res.json({auth: true, token: token, result:result});
@@ -270,6 +270,72 @@ app.get('/getEvent', auth, (req,res) => {
             if (result.length > 0) {
                 res.json(result);
             } else(res.send({message: "No data for this event"}));
+        }  
+    );
+})
+
+app.get('/getUsers', auth, (req,res) => {
+    const email = req.user.userEmail;
+    const admins = config.siteData.admins;
+    
+    for(var i = 0; i < admins.length; i++)
+    {
+        if(admins[i] === email)
+        {
+            connection.query(
+                "SELECT * FROM accounts", (err, result) => {
+                    if(err) {
+                        res.json({err:err});
+                    }
+                    if (result.length > 0) {
+                        res.json(result);
+                    } else(res.send({message: "No data"}));
+                    
+                }
+            )
+        }
+    } 
+})
+
+app.post('/assignMatch', auth, (req,res) => {
+    const email = req.user.userEmail;
+    const admins = config.siteData.admins;
+    const data = req.body;
+    
+    for(var i = 0; i < admins.length; i++)
+    {
+        if(admins[i] === email)
+        {
+            connection.query(
+                "INSERT INTO matchassign(email,eventid,MatchNumber,TeamNumber) VALUES(?,?,?,?)",
+                [data.email, data.eventCode, data.matchNumber, data.teamNumber], 
+                (err, result) => {
+                    if(err) {
+                        res.json({err:err});
+                    } else {
+                        res.json({message:"Match Assigned"})
+                    }
+                    
+                    
+                }
+            )
+        }
+    } 
+})
+
+app.get('/getAssignedMatches', auth, (req,res) => {
+    const email = req.user.userEmail;
+    connection.query(
+        "SELECT * FROM matchassign WHERE email = ?",
+        [email],
+        (err, result)=> {
+            if (err) {
+                res.send({err: err});
+            }
+    
+            if (result.length > 0) {
+                res.json(result);
+            } else(res.send({message: "No matches"}));
         }  
     );
 })
