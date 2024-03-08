@@ -31,6 +31,7 @@ app.use(cors({
     methods: ["GET", "POST"],
     credentials: true,
 }));
+app.options('*', cors())
 app.use(cookieParser());
 app.use(express.urlencoded({extended: true}));
 app.use (
@@ -170,6 +171,18 @@ app.post('/submit',auth,(req, res) => {
         (err, result)=> {
             if (err) {
                 res.send({err: err});
+            } else {
+                connection.query(
+                    "DELETE FROM matchassign WHERE eventid = ? AND MatchNumber = ? AND TeamNumber = ?",
+                    [data.eventCode, data.matchNumber, data.teamNumber],
+                    (err,res) => {
+                        if(err) {
+                            console.log(err);
+                        }
+                        console.log("deleted");
+                    }
+                    
+                )
             }
         }  
     );
@@ -338,6 +351,65 @@ app.get('/getAssignedMatches', auth, (req,res) => {
             } else(res.send({message: "No matches"}));
         }  
     );
+})
+
+// app.get('/clearMatches', (req,res) => {
+//     var matchdata;
+//     connection.query(
+//         "SELECT * FROM matches",
+//         (err,result) => {
+//             if(err) {
+//                 console.log(err);
+//             }
+
+//             if(result.length > 0) {
+//                 matchdata=result.data;
+//                 console.log(matchdata)
+//                 console.log('loop')
+//                 for(let i = 0; i < JSON.parse(JSON.stringify(matchdata)).length; i++)
+//                 {
+//                     connection.query(
+//                         "SELECT * FROM matchassign WHERE eventid = ? AND MatchNumber = ? AND TeamNumber = ?",
+//                         [matchdata[i].eventid, matchdata[i].MatchNumber, matchdata[i].TeamNumber],
+//                         (err,result) => {
+//                             if(err) {
+//                                 console.log(err)
+//                             }
+
+//                             if(result > 0)
+//                             {
+//                                 console.log('delete')
+//                                 connection.query(
+//                                     "DELETE FROM matchassign WHERE matchAssignId = ?"
+//                                     [res[0].matchAssignId],
+//                                     (err,res) => {
+//                                         if(err) {
+//                                             console.log(err);
+//                                         }
+//                                         console.log("deleted");
+//                                     }
+                                    
+//                                 )
+//                             }
+//                         }
+//                     )
+//                 }
+//             }
+//         }
+//     )
+// }) 
+
+app.get('/getAdmin',auth, (req,res) => {
+    const email = req.user.userEmail;
+    const admins = config.siteData.admins;
+    
+    for(var i = 0; i < admins.length; i++)
+    {
+        if(admins[i] === email)
+        {
+            res.json({admin:true})
+        } else {res.JSON({admin:false})}
+    } 
 })
 
 const PORT = process.env.PORT || 8080;

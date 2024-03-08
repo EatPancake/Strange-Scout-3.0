@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from 'axios';
 import "./Scouting.css"
 import api from "../../api.json"
@@ -32,6 +32,8 @@ const TELE_TRAP = 5;
 
 
 export default function Scouting() {
+    const Navigate = useNavigate();
+
     const [currentTime, setCurrentTime] = useState();
     const [canScore, setCanScore] = useState();
 
@@ -451,7 +453,7 @@ export default function Scouting() {
                     </div>
                     <div>
                         <label className="scouting-text">
-                            <button className="continue-button" onClick={() => {Submit()}}>Submit</button>
+                            <button className="continue-button" onClick={() => {Submit(); Navigate('/auth/dashboard')}}>Submit</button>
                         </label>
                     </div>      
                 </div>}

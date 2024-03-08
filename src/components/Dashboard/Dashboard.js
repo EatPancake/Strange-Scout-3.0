@@ -7,31 +7,9 @@ import api from '../../api.json'
 
 export default function Dashboard() {
 
-    const [items, setItems] = useState([{code : "2024ncash", match : 5, team : 1533, alliance : 0, playoff : true}, {code : "2024ncash", match : 17, team : 1533, alliance : 0, playoff: false}]);
+    const [items, setItems] = useState();
     const Navigate = useNavigate();
-
-    const ScoutUrl = (code,match,team,alliance,playoff) => {
-        const url = `/auth/scouting/?code=${code}&match=${match}&team=${team}&alliance=${alliance}&playoff=${playoff}`;
-        return Navigate(url);
-    }
-
-    const EventChange = () => {
-        axios.post(`${api.api}/setEvent`,{
-            event:"2023ncash",
-        }, {
-            headers:{
-                "x-access-token":localStorage.getItem("token")
-            }
-        });
-    }
-
-    const updateEventMatches = () => {
-        axios.get(`${api.api}/updateEventMatches`,{
-            headers:{
-                "x-access-token":localStorage.getItem("token")
-            }
-        });
-    }
+    const [adimn, setAdmin] = useState(false);
 
     useEffect(() => {
         async function getAssignedMatches() {
@@ -43,7 +21,11 @@ export default function Dashboard() {
                 setItems(res.data);
             });
         }
+        async function getAdmin(){
+            await axios.get(`${api.api}/getAdmin`,{headers:{"x-access-token":localStorage.getItem("token")}}).then((res)=>{setAdmin(res.data.admin)})
+        }
         getAssignedMatches();
+        getAdmin();
     },[]);
 
     return(
@@ -56,14 +38,11 @@ export default function Dashboard() {
                 <a href='/auth/pit-scouting'>Pit Scout</a>
                 <a className='nav-logout' href='/logout'>Logout</a>
             </div>
+            {adimn && <div className='assign-box'>
+                <button  className='assign-button'onClick={()=>{Navigate('/auth/assign')}}>Assign Matches</button>
+            </div>}
             <div>
-                <button onClick={EventChange}>test button</button>
-            </div>
-            <div>
-                <button onClick={updateEventMatches}>test button</button>
-            </div>
-            <div>
-                <ScoutMatches items={items}/>
+                {items ? <ScoutMatches items={items}/> : <h1>Getting Matches</h1>}
             </div>
         </div>        
     );

@@ -51,7 +51,10 @@ export default function Data() {
                 <a href='/auth/pit-scouting'>Pit Scout</a>
                 <a className='nav-logout' href='/logout'>Logout</a>
             </div>
-            <button onClick={updateData}>Test</button>
+            <div className="assign-box">
+                <button className="assign-button" onClick={updateData}>Refresh Data</button>
+            </div>
+            
             {/* <button onClick={() => {sendData = true}}>Test</button> */}
             {sendData ? <MatchData items={match}/> : <h1>Getting Data</h1>}
         </>

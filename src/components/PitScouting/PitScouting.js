@@ -109,7 +109,7 @@ export default function PitScouting() {
                     <label className="pit-text">Trap</label>
                 </div>    
             </div>
-            <div>
+            {/* <div>
                 <h1 className="scouting-text">Autos</h1>
                 <div>
                     <button className="auto-add">Add Auto</button>
@@ -138,14 +138,14 @@ export default function PitScouting() {
                                 });
                         }}> Get image</button>
                 </div>
-            </div>    
+            </div>     */}
             <div>
                 <h1 className="scouting-text">Notes</h1>
                 <input className="pit-notes" type="text" onChange={e => SetNote(e.target.value)}></input>
             </div> 
-            <div>
-                {cansubmit && <button onClick={submit}> submit</button>}
-            </div> 
+            {cansubmit && <div className="assign-box">
+                <button className="assign-button"onClick={submit}> submit</button>
+            </div>}
         </div>
     )
 }
